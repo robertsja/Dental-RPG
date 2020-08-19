@@ -10,21 +10,40 @@
 def characters():
     """ Gives user a character name """
     character = input('What is your name: ')
-    enemy = 'plaque'
+    enemy = 'Plaque'
     return character, enemy
 
 
 def player_attack():
     attack_verify = input("Press Enter to attack ").strip()
-    return True 
+    return True
 
 
+def enemy_attack():
+    attack_verify = True
+    return attack_verify
 
-def turns():
+
+def turns(e_name):
     for i in range(0, 100):
-        attack = player_attack()
-        if attack == True:
-            print("You have attacked")
+        attack_p = player_attack()
+        if attack_p == True:
+            print("You have attacked\n")
+        else:
+            continue
+        attack_e = enemy_attack()
+        if attack_e == True:
+            print('{} has attacked\n'.format(e_name))
+        else:
+            continue
+
+def main():
+    username, e_name = characters()
+    turns(e_name)
+
+
+main()
+        
         
 
         
