@@ -7,6 +7,9 @@
 # young people about dental hygiene. 
 
 
+import random
+
+
 def characters():
     """ Gives user a character name """
     character = input('What is your name: ')
@@ -15,13 +18,42 @@ def characters():
 
 
 def player_attack():
-    attack_verify = input("Press Enter to attack ").strip()
-    return True
+    """ Asks user to select type of attack """
+    end = False
+    attack_types = ['1', '2', '3']
+    while end == False:
+        attack_u = ''
+        while not (attack_u_num in attack_types):
+            attack_u_num = str(input('''What type of attack do you want to do:
+1: Rock
+2: Paper
+3: Scissors
+
+: '''))
+
+    if attack_u_num == '1':
+        attack_u = 'Rock'
+        end = True
+        
+    elif attack_u_num == '2':
+        attack_u = 'Paper'
+        end = True
+        
+    elif attack_u_num == '3':
+        attack_u = 'Scissors'
+        end = True
+        
+    else:
+        end = False
+    print('You have picked {}'.format(attack_u))
+    return attack_u
 
 
 def enemy_attack():
-    attack_verify = True
-    return attack_verify
+    """ Enemy randomly selects between R P or S """
+    attack_e_num = random.randint(1, 3)
+    print(attack_e_num)
+    
 
 
 def turns(e_name):
@@ -40,9 +72,9 @@ def turns(e_name):
 def main():
     username, e_name = characters()
     turns(e_name)
+    
+    
 
-
-main()
         
         
 
