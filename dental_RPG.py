@@ -66,35 +66,39 @@ def enemy_attack():
 
 
 def turns():
-    print()
-    attack_u = user_attack()
-    attack_e = enemy_attack()
-    if ((attack_u == 'Tooth Brush' and attack_e == 'Plaque')
-    or (attack_u == 'Mouth Wash' and attack_e == 'Bad Breath')
-    or (attack_u == 'Dental Floss' and attack_e == 'Gum Disease')):
-        print('\nYou used {} and beat {}. Good Job!'.format(attack_u, attack_e))
+    win = 0
+    loss = 0
+    for i in range(0, 5):
+        print('Round {} of 5\n'.format(i + 1))
+        attack_u = user_attack()
+        attack_e = enemy_attack()
+        if ((attack_u == 'Tooth Brush' and attack_e == 'Plaque')
+        or (attack_u == 'Mouth Wash' and attack_e == 'Bad Breath')
+        or (attack_u == 'Dental Floss' and attack_e == 'Gum Disease')):
+            print('\nYou used {} and beat {}. Good Job!'.format(attack_u, attack_e))
+            win += 1
 
-
-    elif (attack_u == 'Tooth Brush' and attack_e == 'Bad Breath'):
-        print('\nUh Oh. You have got {}. You need to use Mouth Wash.'.format(attack_e))
-
-
-    elif (attack_u == 'Mouth Wash' and attack_e == 'Gum Disease'):
-        print('\nUh Oh. You have got {}. You need to use Dental Floss.'.format(attack_e))
-
-
-    elif (attack_u == 'Dental Floss' and attack_e == 'Plaque'):
-        print('\nUh Oh. You have got {}. You need to use Tooth Brush.'.format(attack_e))
-
-    else:
-        print('\n{} doesn\'t effect {}.'.format(attack_u, attack_e))
+        elif (attack_u == 'Tooth Brush' and attack_e == 'Bad Breath'):
+            print('\nUh Oh. You have got {}. You need to use Mouth Wash.'.format(attack_e))
+            loss += 1
             
+        elif (attack_u == 'Mouth Wash' and attack_e == 'Gum Disease'):
+            print('\nUh Oh. You have got {}. You need to use Dental Floss.'.format(attack_e))
+            loss += 1
+            
+        elif (attack_u == 'Dental Floss' and attack_e == 'Plaque'):
+            print('\nUh Oh. You have got {}. You need to use Tooth Brush.'.format(attack_e))
+            loss += 1
+        else:
+            print('\n{} doesn\'t effect {}.'.format(attack_u, attack_e))
+            
+    return win, loss
     
 
 def win_loss(win, loss, username):
     """ Totals wins and loss and tells if the user won """
     if win > loss:
-        print('Good Job {}, you won {} out of 5 rounds and won!'.format(username, win))
+        print('Good Job {}, you won {} out of 5 rounds and beat Bad Dental Hygiene!'.format(username, win))
     elif win == loss:
         print('{}, you drew with bad dental hygiene, both winning {} rounds each'.format(username, win))
     else:
@@ -102,7 +106,8 @@ def win_loss(win, loss, username):
 
 def main():
     username = characters()
-    turns()
+    win, loss = turns()
+    win_loss(win, loss, username)
     
 
         
