@@ -12,14 +12,79 @@ import random
 
 def characters():
     """ Gives user a character name """
-    character = input('What is your name: ')
+    character = ''
+    while character == '':
+        character = input('What is your name: ').strip().title()
+    print('Welcome {}\n'.format(character))
     return character
 
+
+def weapon_pick():
+    """ User picks weapon """
+    end = False
+    weapon_set = ['1', '2', '3']
+    while end == False:
+        weapon_set_num = ''
+        while not (weapon_set_num in weapon_set):
+            weapon_set_num = str(input('''What type of weapon do you want to use:
+1: Tooth Brush:
+    Moves          Damage
+    30 sec brush    | 10 DMG
+    hard bristle    | 15 DMG
+    Circular motion | 20 DMG
+    Perfect Brush   | 25 DMG
+    
+2: Mouth Wash
+    Moves          Damage
+    Swish swish     | 10 DMG
+    Gargle          | 15 DMG
+    Gargle rinse    | 20 DMG
+    Perfect wash    | 25 DMG
+    
+3: Dental Floss
+    Moves          Damage
+    Bad Technique   | 10 DMG
+    Cutting Gums    | 15 DMG
+    Thorough Floss  | 20 DMG
+    Perfect Floss   | 25 DMG
+
+: ''')).strip()
+
+        if weapon_set_num == '1':
+            weapon_u = 'Tooth Brush'
+            end = True
+            
+        elif weapon_set_num == '2':
+            weapon_u = 'Mouth Wash'
+            end = True
+            
+        elif weapon_set_num == '3':
+            weapon_u = 'Dental Floss'
+            end = True
+            
+        else:
+            end = False
+            
+    return weapon_u
+
+
+def moves_type(weapon):
+    if weapon == 'Tooth Brush':
+        moves = {'30 Sec Brush':10, 'Hard Bristle':15,
+                 'Circular Motion':20, 'Perfect Brush':25}
+    elif weapon == 'Mouth Wash':
+        moves = {'Swish Swish':10, 'Gargle':15,
+                 'Gargle Rinse':20, 'Perfect Wash':25}
+    else:
+        moves = {'Bad Technique':10, 'Cutting Gums':15,
+                 'Thorough Floss':20, 'Perfect Floss':25}
+    return moves
+        
 
 def user_attack():
     """ Asks user to select type of attack """
     end = False
-    attack_types = ['1', '2', '3']
+    attack_types = ['1', '2', '3', '4']
     while end == False:
         attack_u_num = ''
         while not (attack_u_num in attack_types):
@@ -49,8 +114,8 @@ def user_attack():
     return attack_u
 
 
-def enemy_attack():
-    """ Enemy randomly selects between R P or S """
+def enemy_select():
+    """ Enemy randomly selected """
     attack_e_num = random.randint(1, 3)
     if attack_e_num == 1:
         attack_e = 'Plaque'
@@ -65,34 +130,11 @@ def enemy_attack():
     
 
 
-def turns():
-    win = 0
-    loss = 0
-    for i in range(0, 5):
-        print('Round {} of 5\n'.format(i + 1))
-        attack_u = user_attack()
-        attack_e = enemy_attack()
-        if ((attack_u == 'Tooth Brush' and attack_e == 'Plaque')
-        or (attack_u == 'Mouth Wash' and attack_e == 'Bad Breath')
-        or (attack_u == 'Dental Floss' and attack_e == 'Gum Disease')):
-            print('\nYou used {} and beat {}. Good Job!'.format(attack_u, attack_e))
-            win += 1
-
-        elif (attack_u == 'Tooth Brush' and attack_e == 'Bad Breath'):
-            print('\nUh Oh. You have got {}. You need to use Mouth Wash.'.format(attack_e))
-            loss += 1
-            
-        elif (attack_u == 'Mouth Wash' and attack_e == 'Gum Disease'):
-            print('\nUh Oh. You have got {}. You need to use Dental Floss.'.format(attack_e))
-            loss += 1
-            
-        elif (attack_u == 'Dental Floss' and attack_e == 'Plaque'):
-            print('\nUh Oh. You have got {}. You need to use Tooth Brush.'.format(attack_e))
-            loss += 1
-        else:
-            print('\n{} doesn\'t effect {}.'.format(attack_u, attack_e))
-            
-    return win, loss
+def turns(weapon, moves):
+    enemy = enemy_select()
+    enemy_hp = 100
+    user_hp = 100
+    
     
 
 def win_loss(win, loss, username):
@@ -106,6 +148,8 @@ def win_loss(win, loss, username):
 
 def main():
     username = characters()
+    weapon = weapon_pick()
+    moves = moves_types(weapon)
     win, loss = turns()
     win_loss(win, loss, username)
     
