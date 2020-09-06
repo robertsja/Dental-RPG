@@ -69,16 +69,23 @@ def weapon_pick():
 
 
 def moves_type(weapon):
+    """ Assigns the moves to dict and list for later use """
     if weapon == 'Tooth Brush':
-        moves = {'30 Sec Brush':10, 'Hard Bristle':15,
+        moves_dict = {'30 Sec Brush':10, 'Hard Bristle':15,
                  'Circular Motion':20, 'Perfect Brush':25}
+
+        moves_list = '30 Sec Brush', 'Hard Bristle',
+        'Circular Motion', 'Perfect Brush']
+        
     elif weapon == 'Mouth Wash':
-        moves = {'Swish Swish':10, 'Gargle':15,
+        moves_dict = {'Swish Swish':10, 'Gargle':15,
                  'Gargle Rinse':20, 'Perfect Wash':25}
+
+        moves_list[]
     else:
-        moves = {'Bad Technique':10, 'Cutting Gums':15,
+        moves_dict = {'Bad Technique':10, 'Cutting Gums':15,
                  'Thorough Floss':20, 'Perfect Floss':25}
-    return moves
+    return moves_dict
         
 
 def user_attack():
@@ -130,10 +137,27 @@ def enemy_select():
     
 
 
-def turns(weapon, moves):
+def turns(weapon, moves, username):
+
+    count = 0
     enemy = enemy_select()
     enemy_hp = 100
     user_hp = 100
+    print('''-------------------------------
+{} HP: {}
+{} HP: {}
+-------------------------------
+          '''.format(username, user_hp, enemy, enemy_hp))
+    print('Attacks:')
+    for move, damage in moves.items():
+        count += 1
+        print('{}: {}: {}DMG'.format(count, move, damage))
+    valid_input = ['1', '2', '3', '4']
+    attack = ''
+    while not(attack in valid_input):
+        attack = input('Pick your attack: ')
+    
+
     
     
 
@@ -149,9 +173,8 @@ def win_loss(win, loss, username):
 def main():
     username = characters()
     weapon = weapon_pick()
-    moves = moves_types(weapon)
-    win, loss = turns()
-    win_loss(win, loss, username)
+    moves = moves_type(weapon)
+    turns(weapon, moves, username)
     
 
         
