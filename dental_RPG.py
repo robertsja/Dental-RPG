@@ -12,7 +12,9 @@ import random
 
 def characters():
     """ Gives user a character name """
+
     character = ''
+    # Doesn't allow blank space
     while character == '':
         character = input('What is your name: ').strip().title()
     print('Welcome {}\n'.format(character))
@@ -20,43 +22,49 @@ def characters():
 
 def hp(username, user_hp, enemy, enemy_hp, user_damage, enemy_damage):
     """ Changes users and CPU's hit points"""
+
     user_hp -= enemy_damage
     enemy_hp -= user_damage
+
     # If hp goes below 0, it won't show negative numbers
     if user_hp < 0:
         print('''-------------------------------
-{} HP: 0%
-{} HP: {}%
+{} HP: 0
+{} HP: {}
 -------------------------------
 You lost to bad dental hygiene :(
           '''.format(username, enemy, enemy_hp))
     elif enemy_hp < 0:
         print('''-------------------------------
-{} HP: {}%
-{} HP: 0%
+{} HP: {}
+{} HP: 0
 -------------------------------
 You beat bad dental hygiene!
           '''.format(username, user_hp, enemy))
     elif user_hp < 0 and enemy_hp < 0:
         print('''-------------------------------
-{} HP: 0%
-{} HP: 0%
+{} HP: 0
+{} HP: 0
 -------------------------------
 You drew to bad dental hygiene :|
           '''.format(username, enemy))
     else:
         print('''-------------------------------
-{} HP: {}%
-{} HP: {}%
+{} HP: {}
+{} HP: {}
 -------------------------------
               '''.format(username, user_hp, enemy, enemy_hp))
+
     return user_hp, enemy_hp
 
 
 def weapon_pick():
     """ User picks weapon """
+
+    # Menu type selection
     end = False
     weapon_set = ['1', '2', '3']
+
     while end == False:
         weapon_set_num = ''
         while not (weapon_set_num in weapon_set):
@@ -81,7 +89,6 @@ def weapon_pick():
     Cutting Gums    | 15 DMG
     Thorough Floss  | 20 DMG
     Perfect Floss   | 25 DMG
-
 : ''')).strip()
 
         if weapon_set_num == '1':
@@ -105,6 +112,8 @@ def weapon_pick():
 def moves_type(weapon):
     """ Assigns the moves to dict and list for later use """
 
+    # Using damage first as key, makes it easier as they
+    # are numerals rather than strings, easier to iterate with
     if weapon == 'Tooth Brush':
         moves_dict = {10:'30 Sec Brush', 15:'Hard Bristle',
                       20:'Circular Motion', 25:'Perfect Brush'}
@@ -123,18 +132,21 @@ def moves_type(weapon):
 def user_attack(weapon, moves, username):
     """ Asks user to select type of attack """
 
+    # Count used to show which key to press 
     count = 0
     print('-------------------------------')
     print('Attacks:')
     for damage, move in sorted(moves.items()):
         count += 1
         print('{}: {}: {}DMG'.format(count, move, damage))
+
     valid_input = ['1', '2', '3', '4']
     attack = ''
     while not(attack in valid_input):
         attack = input('\nPick your attack: ')
         print('')
 
+    # Tells user what they have done, makes it easier to test 
     for damage, move in moves.items():
         if (attack == '1') and (damage == 10):
             print('{} has used {} dealing {} DMG'.format(username, move, damage))
@@ -155,10 +167,11 @@ def user_attack(weapon, moves, username):
 
 def enemy_attack():
     """ Randomly picks an attack for the enemy to pick """
+    
     num = random.randint(1, 4)
     if num == 1:
         damage = 10
-        attack = 'Plaque'
+        attack = 'Plaque Buildup'
     elif num == 2:
         damage = 15
         attack = 'Chipped Tooth'
@@ -175,6 +188,7 @@ def enemy_attack():
 
 def enemy_select():
     """ Enemy randomly selected """
+
     attack_e_num = random.randint(1, 3)
     if attack_e_num == 1:
         attack_e = 'Plaque'
@@ -213,15 +227,3 @@ def main():
     weapon = weapon_pick()
     moves = moves_type(weapon)
     turns(weapon, moves, username)
-    
-
-        
-        
-
-        
-        
-    
-    
-    
-    
-
