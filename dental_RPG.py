@@ -35,11 +35,13 @@ What would you like to do:
             if game_mode == '1':
                 repeat = 'Y'
                 while repeat == 'Y':
+                    print('Out of 5 - Normal:')
                     win, loss = normal_turns()
                     win_loss(win, loss, username)
                     repeat = again()
                     if repeat == 'N':
-                        menu(username)
+                        # Shows that it returns to menu
+                        end = False
                     else:
                         continue
 
@@ -47,17 +49,33 @@ What would you like to do:
             else:
                 repeat = 'Y'
                 while repeat == 'Y':
+                    print('Out of 5 - Comlex:')
                     win, loss = complex_turns()
                     win_loss(win, loss, username)
                     repeat = again()
                     if repeat == 'N':
-                        menu(username)
+                        # Shows that it returns to menu
+                        end = False
                     else:
                         continue
-            end = True
 
         elif user_choice == '2':
-            continue 
+            game_mode = game_type()
+
+            # If user picks normal
+            if game_mode == '1':
+                print('Endless - Normal:')
+                win, loss, draw = endless_normal_turns()
+                win_loss(win, loss, draw, username)
+                end = False
+
+            # If user picks complex
+            else:
+                print('Endless - Complex:')
+                win, loss = endless_complex_turns()
+                win_loss(win, loss, username)
+                end = False
+                
             
         elif user_choice == '3':
             highscores()
@@ -341,11 +359,214 @@ def complex_turns():
     return win, loss
     
 
-def win_loss(win, loss, username):
+def endless_normal_user_attack():
+    """ Asks user to select type of attack """
+    end = False
+    attack_types = ['1', '2', '3', '4']
+    while end == False:
+        attack_u_num = ''
+        # Menu assigning the attacks that the user wants
+        while not (attack_u_num in attack_types):
+            attack_u_num = str(input('''What type of attack do you want to do:
+1: Tooth Brush (Beats Plaque, loses to Bad Breath, Draws against Gum Disease)
+2: Mouth Wash (Beats Bad Breath, Loses to Gum disease, Draws Plaque)
+3: Dental Floss (Beats Gum Disease, Loses to Plaque, Draws against Bad Breath)
+4: Stop Endless
+: ''')).strip()
+
+        if attack_u_num == '1':
+            attack_u = 'Tooth Brush'
+            end = True
+            
+        elif attack_u_num == '2':
+            attack_u = 'Mouth Wash'
+            end = True
+            
+        elif attack_u_num == '3':
+            attack_u = 'Dental Floss'
+            end = True
+            
+        else:
+            attack_u = 'End'
+            end = True
+    # Tells user what they picked 
+    print('You have picked {}'.format(attack_u))
+
+    return attack_u    
+
+
+def endless_normal_turns():
+    win = 0
+    draw = 0
+    loss = 0
+    count = 0
+    attack_u = ''
+    while attack_u != 'End':
+        count += 1
+        print('Round {}\n'.format(count))
+        attack_u = endless_normal_user_attack()
+        attack_e = normal_enemy_attack()
+        # Assigns wins and losses 
+        if ((attack_u == 'Tooth Brush' and attack_e == 'Plaque')
+        or (attack_u == 'Mouth Wash' and attack_e == 'Bad Breath')
+        or (attack_u == 'Dental Floss' and attack_e == 'Gum Disease')):
+            print('\nYou used {} and beat {}. Good Job!'.format(attack_u, attack_e))
+            win += 1
+
+        elif (attack_u == 'Tooth Brush' and attack_e == 'Bad Breath'):
+            print('\nUh Oh. You have got {}. You need to use Mouth Wash.'.format(attack_e))
+            loss += 1
+            
+        elif (attack_u == 'Mouth Wash' and attack_e == 'Gum Disease'):
+            print('\nUh Oh. You have got {}. You need to use Dental Floss.'.format(attack_e))
+            loss += 1
+            
+        elif (attack_u == 'Dental Floss' and attack_e == 'Plaque'):
+            print('\nUh Oh. You have got {}. You need to use Tooth Brush.'.format(attack_e))
+            loss += 1
+        else:
+            print('\n{} doesn\'t effect {}.'.format(attack_u, attack_e))
+            draw += 1
+
+        # Print wins/draws/loss
+        print('Wins - {}, Draws - {}, Loss - {}'.format(win, draw, loss))
+            
+    return win, loss, draw
+
+
+def endless_complex_user_attack():
+    """ Asks user to select type of attack """
+    end = False
+    # Valid attack inputs, making sure it doesn't error out
+    attack_types = ['1', '2', '3', '4', '5']
+    while end == False:
+        attack_u_num = ''
+        while not (attack_u_num in attack_types):
+            attack_u_num = str(input('''What type of attack do you want to do:
+1: Tooth Brush 
+2: Mouth Wash
+3: Dental Floss
+4: Fillings
+5: Whitener
+(see image for flow chart)
+: ''')).strip()
+
+        # Assigns the attack
+        if attack_u_num == '1':
+            attack_u = 'Tooth Brush'
+            end = True
+            
+        elif attack_u_num == '2':
+            attack_u = 'Mouth Wash'
+            end = True
+            
+        elif attack_u_num == '3':
+            attack_u = 'Dental Floss'
+            end = True
+
+        elif attack_u_num == '4':
+            attack_u = 'Fillings'
+            end = True
+
+        elif attack_u_num == '5':
+            attack_u = 'Whitener'
+            end = True
+            
+        else:
+            end = False
+    print('You have picked {}'.format(attack_u))
+
+    return attack_u
+
+
+def endless_complex_turns():
+    win = 0
+    loss = 0
+    for i in range(0, 5):
+        print('-----------------------------------')
+        print('Round {} of 5\n'.format(i + 1))
+        attack_u = complex_user_attack()
+        attack_e = complex_enemy_attack()
+
+        # Assigning if you win 
+        if ((attack_u == 'Tooth Brush' and attack_e == 'Plaque')
+        or (attack_u == 'Tooth Brush' and attack_e == 'Bad Breath')
+        or (attack_u == 'Mouth Wash' and attack_e == 'Bad Breath')
+        or (attack_u == 'Mouth Wash' and attack_e == 'Gum Disease')
+        or (attack_u == 'Dental Floss' and attack_e == 'Gum Disease')
+        or (attack_u == 'Dental Floss' and attack_e == 'Cavities')
+        or (attack_u == 'Fillings' and attack_e == 'Cavities')
+        or (attack_u == 'Fillings' and attack_e == 'Yellow Teeth')
+        or (attack_u == 'Whitener' and attack_e == 'Yellow Teeth')
+        or (attack_u == 'Whitener' and attack_e == 'Plaque')):
+            print('\nYou used {} and beat {}. Good Job!'.format(attack_u, attack_e))
+            win += 1
+
+        # Assigning if you lose
+        elif (attack_u == 'Tooth Brush' and attack_e == 'Gum Disease'):
+            print('\nUh Oh. You have got {}. You need to use Mouth Wash '
+                  'or Dental Floss if you have {}.'.format(attack_e, attack_e))
+            loss += 1
+
+        elif (attack_u == 'Tooth Brush' and attack_e == 'Cavities'):
+            print('\nUh Oh. You have got {}. You need to use Fillings '
+                  'or Dental Floss if you have {}.'.format(attack_e, attack_e))
+            loss += 1
+            
+        elif (attack_u == 'Mouth Wash' and attack_e == 'Cavities'):
+            print('\nUh Oh. You have got {}. You need to use Fillings '
+                  'or Dental Floss if you have {}.'.format(attack_e, attack_e))
+            loss += 1
+
+        elif (attack_u == 'Mouth Wash' and attack_e == 'Yellow Teeth'):
+            print('\nUh Oh. You have got {}. You need to use Whitener '
+                  'or Fillings if you have {}.'.format(attack_e, attack_e))
+            loss += 1
+
+        elif (attack_u == 'Dental Floss' and attack_e == 'Yellow Teeth'):
+            print('\nUh Oh. You have got {}. You need to use Fillings '
+                  'or Whitener if you have {}.'.format(attack_e, attack_e))
+            loss += 1
+
+        elif (attack_u == 'Dental Floss' and attack_e == 'Plaque'):
+            print('\nUh Oh. You have got {}. You need to use Tooth Brush '
+                  'or Whitener if you have {}.'.format(attack_e, attack_e))
+            loss += 1
+
+        elif (attack_u == 'Fillings' and attack_e == 'Plaque'):
+            print('\nUh Oh. You have got {}. You need to use Tooth Brush '
+                  'or Whitener if you have {}.'.format(attack_e, attack_e))
+            loss += 1
+
+        elif (attack_u == 'Fillings' and attack_e == 'Bad Breath'):
+            print('\nUh Oh. You have got {}. You need to use Mouth Wash '
+                  'or Tooth Brush if you have {}.'.format(attack_e, attack_e))
+            loss += 1
+
+        elif (attack_u == 'Whitener' and attack_e == 'Gum Disease'):
+            print('\nUh Oh. You have got {}. You need to use Dental Floss '
+                  'or Mouth Wash if you have {}.'.format(attack_e, attack_e))
+            loss += 1
+
+        elif (attack_u == 'Whitener' and attack_e == 'Bad Breath'):
+            print('\nUh Oh. You have got {}. You need to use Tooth Brush '
+                  'or Mouth Wash if you have {}.'.format(attack_e, attack_e))
+            loss += 1
+
+        # Assign if you draw
+        else:
+            print('\n{} doesn\'t effect {}.'.format(attack_u, attack_e))
+        
+            
+    return win, loss
+
+
+def win_loss(win, loss, draw, username):
     """ Totals wins and loss and tells if the user won """
     # Using CPU and User win/loss count to find winner 
     if win > loss:
-        print('Good Job {}, you won {} out of 5 rounds and beat Bad Dental Hygiene!'.format(username, win))
+        print('Good Job {}, you won {} times, drew {} times, lost {} times,'
+              'and beat Bad Dental Hygiene!'.format(username, win, draw, loss))
     elif win == loss:
         print('{}, you drew with bad dental hygiene, both winning {} rounds each'.format(username, win))
     else:
