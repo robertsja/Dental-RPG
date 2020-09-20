@@ -49,7 +49,7 @@ What would you like to do:
             else:
                 repeat = 'Y'
                 while repeat == 'Y':
-                    print('Out of 5 - Comlex:')
+                    print('Out of 5 - Complex:')
                     win, loss, draw = complex_turns()
                     win_loss(win, loss, draw, username)
                     repeat = again()
