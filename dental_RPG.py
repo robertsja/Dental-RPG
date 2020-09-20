@@ -21,10 +21,10 @@ def menu(username):
         while not (user_choice in valid_inputs):
             user_choice = str(input('''\n----------------------------------
 What would you like to do:
-1: Play out of 5
-2: Play endless
-3: Highscores
-4: End Program
+1: Play out of 5 (pai rawa atu rima)
+2: Play endless (mure ore)
+3: Highscores (kaute teitei)
+4: End Program (mutunga)
 : ''')).strip()
             print('----------------------------------')
         # Runs the assigned choice
@@ -103,7 +103,8 @@ def characters():
     character = ''
     # Doesn't allow blank space
     while character == '' or len(character) >= 24:
-        character = input('What is your name: ').strip().title()
+        character = input('What is your name:\n'
+                          '(Ko wai tou ingoa): ').strip().title()
     print('Welcome {}\n'.format(character))
     return character
 
@@ -118,8 +119,8 @@ def game_type():
         while not (choice in valid_inputs):
             choice = str(input('''\n----------------------------------
 Would you like to play:
-1: Normal
-2: Complex
+1: Normal (noa)
+2: Complex (matatini)
 : ''')).strip()
             print('----------------------------------')
         end = True
@@ -136,9 +137,9 @@ def normal_user_attack():
         # Menu assigning the attacks that the user wants
         while not (attack_u_num in attack_types):
             attack_u_num = str(input('''What type of attack do you want to do:
-1: Tooth Brush (Beats Plaque, loses to Bad Breath, Draws against Gum Disease)
-2: Mouth Wash (Beats Bad Breath, Loses to Gum disease, Draws Plaque)
-3: Dental Floss (Beats Gum Disease, Loses to Plaque, Draws against Bad Breath)
+1: Tooth Brush (paraihe niho)
+2: Mouth Wash (horoi horoi mangai)
+3: Dental Floss (miro niho)
 : ''')).strip()
 
         if attack_u_num == '1':
@@ -193,15 +194,15 @@ def normal_turns():
             win += 1
 
         elif (attack_u == 'Tooth Brush' and attack_e == 'Bad Breath'):
-            print('\nUh Oh. You have got {}. You need to use Mouth Wash.'.format(attack_e))
+            print('\nUh Oh. You have got {}. You need to use Mouth Wash (horoi horoi mangai).'.format(attack_e))
             loss += 1
             
         elif (attack_u == 'Mouth Wash' and attack_e == 'Gum Disease'):
-            print('\nUh Oh. You have got {}. You need to use Dental Floss.'.format(attack_e))
+            print('\nUh Oh. You have got {}. You need to use Dental Floss (miro niho).'.format(attack_e))
             loss += 1
             
         elif (attack_u == 'Dental Floss' and attack_e == 'Plaque'):
-            print('\nUh Oh. You have got {}. You need to use Tooth Brush.'.format(attack_e))
+            print('\nUh Oh. You have got {}. You need to use Tooth Brush (paraihe niho).'.format(attack_e))
             loss += 1
         else:
             print('\n{} doesn\'t effect {}.'.format(attack_u, attack_e))
@@ -219,11 +220,11 @@ def complex_user_attack():
         attack_u_num = ''
         while not (attack_u_num in attack_types):
             attack_u_num = str(input('''What type of attack do you want to do:
-1: Tooth Brush 
-2: Mouth Wash
-3: Dental Floss
-4: Fillings
-5: Whitener
+1: Tooth Brush (paraihe niho)
+2: Mouth Wash (horoi horoi mangai)
+3: Dental Floss (miro niho)
+4: Fillings (whakakii)
+5: Whitener (ma)
 (see image for flow chart)
 : ''')).strip()
 
@@ -305,53 +306,53 @@ def complex_turns():
 
         # Assigning if you lose
         elif (attack_u == 'Tooth Brush' and attack_e == 'Gum Disease'):
-            print('\nUh Oh. You have got {}. You need to use Mouth Wash '
-                  'or Dental Floss if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Mouth Wash (horoi horoi mangai) '
+                  'or Dental Floss (miro niho) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Tooth Brush' and attack_e == 'Cavities'):
-            print('\nUh Oh. You have got {}. You need to use Fillings '
-                  'or Dental Floss if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Fillings (whakakii) '
+                  'or Dental Floss (miro niho) if you have {}.'.format(attack_e, attack_e))
             loss += 1
             
         elif (attack_u == 'Mouth Wash' and attack_e == 'Cavities'):
-            print('\nUh Oh. You have got {}. You need to use Fillings '
-                  'or Dental Floss if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Fillings (whakakii) '
+                  'or Dental Floss (miro niho) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Mouth Wash' and attack_e == 'Yellow Teeth'):
-            print('\nUh Oh. You have got {}. You need to use Whitener '
-                  'or Fillings if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Whitener (ma) '
+                  'or Fillings (whakakii) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Dental Floss' and attack_e == 'Yellow Teeth'):
-            print('\nUh Oh. You have got {}. You need to use Fillings '
-                  'or Whitener if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Fillings (whakakii) '
+                  'or Whitener (ma) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Dental Floss' and attack_e == 'Plaque'):
-            print('\nUh Oh. You have got {}. You need to use Tooth Brush '
-                  'or Whitener if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Tooth Brush (paraihe niho) '
+                  'or Whitener (ma) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Fillings' and attack_e == 'Plaque'):
-            print('\nUh Oh. You have got {}. You need to use Tooth Brush '
-                  'or Whitener if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Tooth Brush (paraihe niho) '
+                  'or Whitener (ma) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Fillings' and attack_e == 'Bad Breath'):
-            print('\nUh Oh. You have got {}. You need to use Mouth Wash '
-                  'or Tooth Brush if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Mouth Wash (horoi horoi mangai)'
+                  'or Tooth Brush (paraihe niho) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Whitener' and attack_e == 'Gum Disease'):
-            print('\nUh Oh. You have got {}. You need to use Dental Floss '
-                  'or Mouth Wash if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Dental Floss (miro niho) '
+                  'or Mouth Wash (horoi horoi mangai) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Whitener' and attack_e == 'Bad Breath'):
-            print('\nUh Oh. You have got {}. You need to use Tooth Brush '
-                  'or Mouth Wash if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Tooth Brush (paraihe niho) '
+                  'or Mouth Wash (horoi horoi mangai) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         # Assign if you draw
@@ -372,9 +373,9 @@ def endless_normal_user_attack():
         # Menu assigning the attacks that the user wants
         while not (attack_u_num in attack_types):
             attack_u_num = str(input('''What type of attack do you want to do:
-1: Tooth Brush (Beats Plaque, loses to Bad Breath, Draws against Gum Disease)
-2: Mouth Wash (Beats Bad Breath, Loses to Gum disease, Draws Plaque)
-3: Dental Floss (Beats Gum Disease, Loses to Plaque, Draws against Bad Breath)
+1: Tooth Brush (paraihe niho) 
+2: Mouth Wash (horoi horoi mangai)
+3: Dental Floss (miro niho) 
 
 0: Stop Endless
 : ''')).strip()
@@ -424,15 +425,15 @@ def endless_normal_turns():
             win += 1
 
         elif (attack_u == 'Tooth Brush' and attack_e == 'Bad Breath'):
-            print('\nUh Oh. You have got {}. You need to use Mouth Wash.'.format(attack_e))
+            print('\nUh Oh. You have got {}. You need to use Mouth Wash (horoi horoi mangai).'.format(attack_e))
             loss += 1
             
         elif (attack_u == 'Mouth Wash' and attack_e == 'Gum Disease'):
-            print('\nUh Oh. You have got {}. You need to use Dental Floss.'.format(attack_e))
+            print('\nUh Oh. You have got {}. You need to use Dental Floss (miro niho).'.format(attack_e))
             loss += 1
             
         elif (attack_u == 'Dental Floss' and attack_e == 'Plaque'):
-            print('\nUh Oh. You have got {}. You need to use Tooth Brush.'.format(attack_e))
+            print('\nUh Oh. You have got {}. You need to use Tooth Brush (paraihe niho).'.format(attack_e))
             loss += 1
 
         # If user selects 0 it wont do anything 
@@ -460,11 +461,11 @@ def endless_complex_user_attack():
         attack_u_num = ''
         while not (attack_u_num in attack_types):
             attack_u_num = str(input('''What type of attack do you want to do:
-1: Tooth Brush 
-2: Mouth Wash
-3: Dental Floss
-4: Fillings
-5: Whitener
+1: Tooth Brush (paraihe niho)
+2: Mouth Wash (horoi horoi mangai)
+3: Dental Floss (miro niho)
+4: Fillings (whakakii)
+5: Whitener (ma)
 (see image for flow chart)
 
 0: To Quit Endless
@@ -531,53 +532,53 @@ def endless_complex_turns():
 
         # Assigning if you lose
         elif (attack_u == 'Tooth Brush' and attack_e == 'Gum Disease'):
-            print('\nUh Oh. You have got {}. You need to use Mouth Wash '
-                  'or Dental Floss if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Mouth Wash (horoi horoi mangai)'
+                  'or Dental Floss (miro niho) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Tooth Brush' and attack_e == 'Cavities'):
-            print('\nUh Oh. You have got {}. You need to use Fillings '
-                  'or Dental Floss if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Fillings (whakakii) '
+                  'or Dental Floss (miro niho) if you have {}.'.format(attack_e, attack_e))
             loss += 1
             
         elif (attack_u == 'Mouth Wash' and attack_e == 'Cavities'):
-            print('\nUh Oh. You have got {}. You need to use Fillings '
-                  'or Dental Floss if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Fillings (whakakii) '
+                  'or Dental Floss (miro niho) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Mouth Wash' and attack_e == 'Yellow Teeth'):
-            print('\nUh Oh. You have got {}. You need to use Whitener '
-                  'or Fillings if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Whitener (ma) '
+                  'or Fillings (whakakii) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Dental Floss' and attack_e == 'Yellow Teeth'):
-            print('\nUh Oh. You have got {}. You need to use Fillings '
-                  'or Whitener if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Fillings (whakakii) '
+                  'or Whitener (ma) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Dental Floss' and attack_e == 'Plaque'):
-            print('\nUh Oh. You have got {}. You need to use Tooth Brush '
-                  'or Whitener if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Tooth Brush (paraihe niho) '
+                  'or Whitener (ma) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Fillings' and attack_e == 'Plaque'):
-            print('\nUh Oh. You have got {}. You need to use Tooth Brush '
-                  'or Whitener if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Tooth Brush (paraihe niho) '
+                  'or Whitener (ma) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Fillings' and attack_e == 'Bad Breath'):
-            print('\nUh Oh. You have got {}. You need to use Mouth Wash '
-                  'or Tooth Brush if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Mouth Wash (horoi horoi mangai) '
+                  'or Tooth Brush (paraihe niho) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Whitener' and attack_e == 'Gum Disease'):
-            print('\nUh Oh. You have got {}. You need to use Dental Floss '
-                  'or Mouth Wash if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Dental Floss (miro niho) '
+                  'or Mouth Wash (horoi horoi mangai) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         elif (attack_u == 'Whitener' and attack_e == 'Bad Breath'):
-            print('\nUh Oh. You have got {}. You need to use Tooth Brush '
-                  'or Mouth Wash if you have {}.'.format(attack_e, attack_e))
+            print('\nUh Oh. You have got {}. You need to use Tooth Brush (paraihe niho) '
+                  'or Mouth Wash (horoi horoi mangai) if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
         # If user uses 0, it doesnt do anything
@@ -611,7 +612,7 @@ def win_loss(win, loss, draw, username):
 
 def goodbye(username):
     """ Says goodbye to user """
-    print('Goodbye {}'.format(username))
+    print('Goodbye (tēnā koe) {}'.format(username))
 def main():
     username = characters()
     menu(username)
