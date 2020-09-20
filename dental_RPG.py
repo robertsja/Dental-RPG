@@ -36,8 +36,8 @@ What would you like to do:
                 repeat = 'Y'
                 while repeat == 'Y':
                     print('Out of 5 - Normal:')
-                    win, loss = normal_turns()
-                    win_loss(win, loss, username)
+                    win, loss, draw = normal_turns()
+                    win_loss(win, loss, draw, username)
                     repeat = again()
                     if repeat == 'N':
                         # Shows that it returns to menu
@@ -50,8 +50,8 @@ What would you like to do:
                 repeat = 'Y'
                 while repeat == 'Y':
                     print('Out of 5 - Comlex:')
-                    win, loss = complex_turns()
-                    win_loss(win, loss, username)
+                    win, loss, draw = complex_turns()
+                    win_loss(win, loss, draw, username)
                     repeat = again()
                     if repeat == 'N':
                         # Shows that it returns to menu
@@ -72,8 +72,8 @@ What would you like to do:
             # If user picks complex
             else:
                 print('Endless - Complex:')
-                win, loss = endless_complex_turns()
-                win_loss(win, loss, username)
+                win, loss, draw = endless_complex_turns()
+                win_loss(win, loss, draw, username)
                 end = False
                 
             
@@ -179,6 +179,7 @@ def normal_enemy_attack():
 
 def normal_turns():
     win = 0
+    draw = 0
     loss = 0
     for i in range(0, 5):
         print('Round {} of 5\n'.format(i + 1))
@@ -204,8 +205,9 @@ def normal_turns():
             loss += 1
         else:
             print('\n{} doesn\'t effect {}.'.format(attack_u, attack_e))
+            draw += 1
             
-    return win, loss
+    return win, loss, draw
 
 
 def complex_user_attack():
@@ -279,6 +281,7 @@ def complex_enemy_attack():
 
 def complex_turns():
     win = 0
+    draw = 0
     loss = 0
     for i in range(0, 5):
         print('-----------------------------------')
@@ -354,15 +357,16 @@ def complex_turns():
         # Assign if you draw
         else:
             print('\n{} doesn\'t effect {}.'.format(attack_u, attack_e))
+            draw += 1
         
             
-    return win, loss
+    return win, loss, draw
     
 
 def endless_normal_user_attack():
     """ Asks user to select type of attack """
     end = False
-    attack_types = ['1', '2', '3', '4']
+    attack_types = ['1', '2', '3', '4', '0']
     while end == False:
         attack_u_num = ''
         # Menu assigning the attacks that the user wants
@@ -371,7 +375,8 @@ def endless_normal_user_attack():
 1: Tooth Brush (Beats Plaque, loses to Bad Breath, Draws against Gum Disease)
 2: Mouth Wash (Beats Bad Breath, Loses to Gum disease, Draws Plaque)
 3: Dental Floss (Beats Gum Disease, Loses to Plaque, Draws against Bad Breath)
-4: Stop Endless
+
+0: Stop Endless
 : ''')).strip()
 
         if attack_u_num == '1':
@@ -384,6 +389,10 @@ def endless_normal_user_attack():
             
         elif attack_u_num == '3':
             attack_u = 'Dental Floss'
+            end = True
+
+        elif attack_u_num == '0':
+            attack_u = '0'
             end = True
             
         else:
@@ -401,8 +410,9 @@ def endless_normal_turns():
     loss = 0
     count = 0
     attack_u = ''
-    while attack_u != 'End':
+    while attack_u != '0':
         count += 1
+        print('-------------------------')
         print('Round {}\n'.format(count))
         attack_u = endless_normal_user_attack()
         attack_e = normal_enemy_attack()
@@ -424,12 +434,19 @@ def endless_normal_turns():
         elif (attack_u == 'Dental Floss' and attack_e == 'Plaque'):
             print('\nUh Oh. You have got {}. You need to use Tooth Brush.'.format(attack_e))
             loss += 1
+
+        # If user selects 0 it wont do anything 
+        elif attack_u == '0':
+            continue
+
         else:
             print('\n{} doesn\'t effect {}.'.format(attack_u, attack_e))
             draw += 1
 
         # Print wins/draws/loss
         print('Wins - {}, Draws - {}, Loss - {}'.format(win, draw, loss))
+
+        
             
     return win, loss, draw
 
@@ -438,7 +455,7 @@ def endless_complex_user_attack():
     """ Asks user to select type of attack """
     end = False
     # Valid attack inputs, making sure it doesn't error out
-    attack_types = ['1', '2', '3', '4', '5']
+    attack_types = ['1', '2', '3', '4', '5', '0']
     while end == False:
         attack_u_num = ''
         while not (attack_u_num in attack_types):
@@ -449,7 +466,9 @@ def endless_complex_user_attack():
 4: Fillings
 5: Whitener
 (see image for flow chart)
-: ''')).strip()
+
+0: To Quit Endless
+: ''')).strip().upper()
 
         # Assigns the attack
         if attack_u_num == '1':
@@ -471,6 +490,10 @@ def endless_complex_user_attack():
         elif attack_u_num == '5':
             attack_u = 'Whitener'
             end = True
+
+        elif attack_u_num == '0':
+            attack_u = '0'
+            end = True
             
         else:
             end = False
@@ -482,10 +505,14 @@ def endless_complex_user_attack():
 def endless_complex_turns():
     win = 0
     loss = 0
-    for i in range(0, 5):
+    draw = 0
+    count = 0
+    attack_u = ''
+    while attack_u != '0':
+        count += 1
         print('-----------------------------------')
-        print('Round {} of 5\n'.format(i + 1))
-        attack_u = complex_user_attack()
+        print('Round {}\n'.format(count))
+        attack_u = endless_complex_user_attack()
         attack_e = complex_enemy_attack()
 
         # Assigning if you win 
@@ -553,12 +580,19 @@ def endless_complex_turns():
                   'or Mouth Wash if you have {}.'.format(attack_e, attack_e))
             loss += 1
 
+        # If user uses 0, it doesnt do anything
+        elif attack_u == '0':
+            continue
+
         # Assign if you draw
         else:
             print('\n{} doesn\'t effect {}.'.format(attack_u, attack_e))
-        
+            draw += 1
+
+        # Print wins/draws/loss
+        print('Wins - {}, Draws - {}, Loss - {}'.format(win, draw, loss))        
             
-    return win, loss
+    return win, loss, draw
 
 
 def win_loss(win, loss, draw, username):
@@ -568,9 +602,11 @@ def win_loss(win, loss, draw, username):
         print('Good Job {}, you won {} times, drew {} times, lost {} times,'
               'and beat Bad Dental Hygiene!'.format(username, win, draw, loss))
     elif win == loss:
-        print('{}, you drew with bad dental hygiene, both winning {} rounds each'.format(username, win))
+        print('{}, you drew with bad dental hygiene. You won {} times, drew {} times, '
+              'and lost {} times'.format(username, win, draw, loss))
     else:
-        print('{}, you have lost to bad dental hygiene. You only beat it {} times'.format(username, win))
+        print('{}, you have lost to bad dental hygiene. You won {} times, drew {} times, '
+              'and lost {} times'.format(username, win, draw, loss))
 
 
 def goodbye(username):
@@ -579,4 +615,3 @@ def goodbye(username):
 def main():
     username = characters()
     menu(username)
-    
