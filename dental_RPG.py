@@ -49,7 +49,7 @@ What would you like to do:
             else:
                 repeat = 'Y'
                 while repeat == 'Y':
-                    print('Out of 5 - Complex:')
+                    print('Out of 5 - Comlex:')
                     win, loss, draw = complex_turns()
                     win_loss(win, loss, draw, username)
                     repeat = again()
@@ -66,20 +66,26 @@ What would you like to do:
             if game_mode == '1':
                 print('Endless - Normal:')
                 win, loss, draw = endless_normal_turns()
-                win_loss(win, loss, draw, username)
+                score = endless_win_loss(win, loss, draw, username)
+                high_score = get_high_score()
+                high_score_calculator(high_score, score, username)
                 end = False
 
             # If user picks complex
             else:
                 print('Endless - Complex:')
                 win, loss, draw = endless_complex_turns()
-                win_loss(win, loss, draw, username)
+                score = endless_win_loss(win, loss, draw, username)
+                high_score = get_high_score()
+                high_score_calculator(high_score, score, username)
                 end = False
                 
             
         elif user_choice == '3':
-            highscores()
-            end = True
+            # gets the high score
+            high_score = print_high_score()
+            
+            end = False
             
         elif user_choice == '4':
             goodbye(username)
@@ -88,6 +94,84 @@ What would you like to do:
             
         else:
             end = False
+
+
+def high_score_calculator(high_score, score, username):
+    """ Calculates high score and runs correct functions """
+    # Take score from current game
+    if score > high_score:
+        # saves score to text file
+        save_high_score(score, username)
+        print('New High Score!!!')
+
+    else:
+        return
+
+
+def get_high_score():
+    """ Gets the high score from the text file so the program
+        can see if the score is greater than the high score from user """
+    # Default highscore
+    high_score = 0
+
+    # Opens the text file and tries to read it
+    try:
+        # Gets number from first file
+        high_score_file = open('high_score.txt', 'r')
+        high_score = int(high_score_file.read())
+        high_score_file.close()
+
+    except IOError:
+        # Error reading file, no high score yet
+        print('There is no high score yet.')
+
+    return high_score
+
+
+def print_high_score():
+    """ Prints the high score from the text file """
+    # Default highscore
+    high_score = 0
+
+    print('----------------------------------')
+    print('High Scores')
+    # Opens the text file and tries to read it
+    try:
+        # Gets number from first file
+        high_score_file = open('high_score.txt', 'r')
+        high_score = int(high_score_file.read())
+        high_score_file.close()
+
+        # Gets username from second file
+        high_score_username_file = open('high_score_username.txt', 'r')
+        high_score_username = str(high_score_username_file.read())
+        high_score_username_file.close()
+        print(high_score_username, ' : ', high_score)
+    except IOError:
+        # Error reading file, no high score yet
+        print('There is no high score yet.')
+
+
+def save_high_score(new_high_score, username):
+    """ Adds high score into text file """
+    try:
+        # write the number to the text file
+        high_score_file = open('high_score.txt', 'w')
+        high_score_file.write(str(new_high_score))
+        high_score_file.close()
+    except IOError:
+        # Cant write highscore
+        print('Unable to save high score.')
+
+    try:
+        # write the username to another file
+        high_score_username_file = open('high_score_username.txt', 'w')
+        high_score_username_file.write(str(username))
+        high_score_username_file.close()
+    except IOError:
+        # Cant write username
+         print('Unable to save high score.')
+        
 
 
 def again():
@@ -608,6 +692,24 @@ def win_loss(win, loss, draw, username):
     else:
         print('{}, you have lost to bad dental hygiene. You won {} times, drew {} times, '
               'and lost {} times'.format(username, win, draw, loss))
+        
+
+def endless_win_loss(win, loss, draw, username):
+    """ Totals wins and loss and tells if the user won """
+    # Using CPU and User win/loss count to find winner 
+    if win > loss:
+        print('Good Job {}, you won {} times, drew {} times, lost {} times,'
+              'and beat Bad Dental Hygiene!'.format(username, win, draw, loss))
+    elif win == loss:
+        print('{}, you drew with bad dental hygiene. You won {} times, drew {} times, '
+              'and lost {} times'.format(username, win, draw, loss))
+    else:
+        print('{}, you have lost to bad dental hygiene. You won {} times, drew {} times, '
+              'and lost {} times'.format(username, win, draw, loss))
+
+    # Calculates score to use for high scores
+    score = win - loss
+    return score
 
 
 def goodbye(username):
