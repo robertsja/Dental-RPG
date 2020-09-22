@@ -49,7 +49,7 @@ What would you like to do:
             else:
                 repeat = 'Y'
                 while repeat == 'Y':
-                    print('Out of 5 - Comlex:')
+                    print('Out of 5 - Complex:')
                     win, loss, draw = complex_turns()
                     win_loss(win, loss, draw, username)
                     repeat = again()
@@ -460,7 +460,6 @@ def endless_normal_user_attack():
 1: Tooth Brush (paraihe niho) 
 2: Mouth Wash (horoi horoi mangai)
 3: Dental Floss (miro niho) 
-
 0: Stop Endless
 : ''')).strip()
 
@@ -551,7 +550,6 @@ def endless_complex_user_attack():
 4: Fillings (whakakii)
 5: Whitener (ma)
 (see image for flow chart)
-
 0: To Quit Endless
 : ''')).strip().upper()
 
@@ -715,6 +713,11 @@ def endless_win_loss(win, loss, draw, username):
 def goodbye(username):
     """ Says goodbye to user """
     print('Goodbye (tēnā koe) {}'.format(username))
+
+
 def main():
     username = characters()
     menu(username)
+
+# Main Routine
+main()
