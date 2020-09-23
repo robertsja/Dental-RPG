@@ -15,7 +15,7 @@ def menu(username):
     game_mode = ''
     end = False
     # Valid attack inputs, making sure it doesn't error out
-    valid_inputs = ['1', '2', '3', '4', '5']
+    valid_inputs = ['1', '2', '3', '0']
     while end == False:
         user_choice = ''
         while not (user_choice in valid_inputs):
@@ -24,7 +24,7 @@ What would you like to do:
 1: Play out of 5 (pai rawa atu rima)
 2: Play endless (mure ore)
 3: Highscores (kaute teitei)
-4: End Program (mutunga)
+0: End Program (mutunga)
 : ''')).strip()
             print('----------------------------------')
         # Runs the assigned choice
@@ -87,7 +87,7 @@ What would you like to do:
             
             end = False
             
-        elif user_choice == '4':
+        elif user_choice == '0':
             goodbye(username)
             return False
             end = True
@@ -185,10 +185,23 @@ def again():
 def characters():
     """ Gives user a character name """
     character = ''
-    # Doesn't allow blank space
-    while character == '' or len(character) >= 24:
-        character = input('What is your name:\n'
-                          '(Ko wai tou ingoa): ').strip().title()
+    consent = ''
+    # Privacy Implication
+    valid_input = ['Y', 'N']
+    while not (consent in valid_input):
+        consent = input('Do you allow for your username '
+                        'to be stored (Y/N): ').upper().strip()
+    if consent == 'Y':
+        # Doesn't allow blank space
+        while character == '' or len(character) >= 24:
+            character = input('What is your name:\n'
+                              '(Ko wai tou ingoa): ').strip().title()
+    # Gives user random name if there isn't any consent
+    else:
+        random_names = ['Grey Goose', 'Lavender Leo', 'Fearful Fish']
+        character_num = random.randint(0, 3)
+        character = random_names[character_num]
+        
     print('Welcome {}\n'.format(character))
     return character
 
@@ -694,6 +707,10 @@ def win_loss(win, loss, draw, username):
 
 def endless_win_loss(win, loss, draw, username):
     """ Totals wins and loss and tells if the user won """
+
+    # Calculates score to use for high scores
+    score = win - loss
+    print('You got a score of {}'.format(score))
     # Using CPU and User win/loss count to find winner 
     if win > loss:
         print('Good Job {}, you won {} times, drew {} times, lost {} times,'
@@ -704,9 +721,7 @@ def endless_win_loss(win, loss, draw, username):
     else:
         print('{}, you have lost to bad dental hygiene. You won {} times, drew {} times, '
               'and lost {} times'.format(username, win, draw, loss))
-
-    # Calculates score to use for high scores
-    score = win - loss
+        
     return score
 
 
